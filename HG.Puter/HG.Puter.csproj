@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Authors>Hossein Ghaheri</Authors>
+    <PackageTags>Puter;Combine Object;Map Object</PackageTags>
+    <PackageIcon>42682-rainbow-icon.png</PackageIcon>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Description>Putting similar properties from the source object into the destination object.</Description>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <Version>$(VersionPrefix)1.0.1</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\Pictures\images\42682-rainbow-icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
