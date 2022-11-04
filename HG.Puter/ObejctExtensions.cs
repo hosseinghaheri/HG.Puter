@@ -12,11 +12,11 @@
                     var val = typeof(T).GetProperty(p.Name).GetValue(date, null);
                     if (val != null)
                     {
-                        var t1 = Nullable.GetUnderlyingType(p.PropertyType);
-                        var ww = typeof(T).GetProperty(p.Name).PropertyType;
-                        var t2 = Nullable.GetUnderlyingType(ww);
+                        var t1Generic = Nullable.GetUnderlyingType(p.PropertyType);
+                        var t2 = typeof(T).GetProperty(p.Name).PropertyType;
+                        var t2Generic = Nullable.GetUnderlyingType(t2);
 
-                        if (t1 == ww || (t1 != null && t1 == t2))
+                        if (t1Generic == t2 || (t1Generic != null && t1Generic == t2Generic))
                         {
                             p.SetValue(source, val, null);
                         }
