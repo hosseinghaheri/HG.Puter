@@ -16,6 +16,7 @@ namespace HG.Puter.Test.Classes
         public float Float { get; set; }
         public ushort Ushort { get; set; }
         public DateTime DateTime { get; set; }
+        public DateTime? DateTimeNA { get; set; }
         public List<int> ListInt { get; set; }
     }
     public class StringModel
@@ -28,6 +29,7 @@ namespace HG.Puter.Test.Classes
         public string Float { get; set; }
         public string Ushort { get; set; }
         public string DateTime { get; set; }
+        public string? DateTimeNA { get; set; }
         public List<int> ListInt { get; set; }
     }
 }

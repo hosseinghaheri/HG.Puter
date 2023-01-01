@@ -68,6 +68,9 @@ namespace HG.Puter.Test
             AllTypeModel.DateTime = DateTime.Now;
             StringModel.DateTime = "2007-01-02 03:04:05";
 
+            AllTypeModel.DateTimeNA = DateTime.Now;
+            StringModel.DateTimeNA = "2007-01-02 03:04:05";
+
             puter.Put(AllTypeModel, StringModel);
             Assert.Equal(AllTypeModel.DateTime.Year, 2007);
             Assert.Equal(AllTypeModel.DateTime.Month, 01);
@@ -91,10 +94,68 @@ namespace HG.Puter.Test
             AllTypeModel.DateTime = DateTime.Now;
             StringModel.DateTime = "2007-01-02 03:04:05";
 
+
+            AllTypeModel.DateTimeNA = DateTime.Now;
+            StringModel.DateTimeNA = "2007-01-02 03:04:05";
+
             puter.Put(StringModel, AllTypeModel);
             Assert.Equal(StringModel.DateTime, "dddddd");
         }
 
+        [Fact]
+        public void Type_Converter_Null_Str_To_Date_Test()
+        {
+            var AllTypeModel = new Filler<AllTypeModel>().Create();
+            var StringModel = new Filler<StringModel>().Create();
+
+            PuterContext puter = new PuterContext();
+
+            puter.CreateMap<string, DateTime>(s =>
+            {
+                if(s == null) return null;
+                else { return DateTime.Parse(s); }
+            });
+            puter.CreateMap<string, int>(s => default(int));
+            puter.CreateMap<string, long>(s => default(long));
+            puter.CreateMap<string, float>(s => default(float));
+            puter.CreateMap<string, double>(s => default(double));
+            puter.CreateMap<string, short>(s => default(short));
+            puter.CreateMap<string, ushort>(s => default(ushort));
+            puter.CreateMap<string, byte>(s => default(byte));
+
+            AllTypeModel.DateTime = DateTime.Now;
+            StringModel.DateTime = null;
+
+            AllTypeModel.DateTimeNA = DateTime.Now;
+            StringModel.DateTimeNA = null;
+
+            puter.Put(AllTypeModel, StringModel);
+            Assert.Equal(AllTypeModel.DateTime, default(DateTime));
+            Assert.Equal(AllTypeModel.DateTimeNA, null);
+        }
+
+        [Fact]
+        public void Type_Converter_Null_Date_To_Str_Test()
+        {
+            var AllTypeModel = new Filler<AllTypeModel>().Create();
+            var StringModel = new Filler<StringModel>().Create();
+
+            PuterContext puter = new PuterContext();
+            puter.CreateMap<DateTime, string>(s =>
+            {
+                return "dddddd";
+            });
+
+            AllTypeModel.DateTime = default(DateTime);
+            StringModel.DateTime = "2007-01-02 03:04:05";
+
+            AllTypeModel.DateTimeNA = null;// DateTime.Now;
+            StringModel.DateTimeNA = "2007-01-02 03:04:05";
+
+            puter.Put(StringModel, AllTypeModel);
+            Assert.Equal(StringModel.DateTime, "dddddd");
+            Assert.Equal(StringModel.DateTimeNA, "dddddd");
+        }
     }
 
    
