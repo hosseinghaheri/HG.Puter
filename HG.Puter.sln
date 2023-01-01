@@ -9,7 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{2F65CF8D-1CC
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{C0BB6051-CF73-4CF4-B6EC-9DA8FEB4B028}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HG.Puter.Test", "HG.Puter.Test\HG.Puter.Test.csproj", "{E64E2E85-8024-4FEF-B58A-3335C0D95CA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HG.Puter.Test", "HG.Puter.Test\HG.Puter.Test.csproj", "{E64E2E85-8024-4FEF-B58A-3335C0D95CA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HG.Puter.ConsoleTest", "HG.Puter.ConsoleTest\HG.Puter.ConsoleTest.csproj", "{A021A820-2902-4F29-AB02-CEE9387D7C38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +27,10 @@ Global
 		{E64E2E85-8024-4FEF-B58A-3335C0D95CA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E64E2E85-8024-4FEF-B58A-3335C0D95CA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E64E2E85-8024-4FEF-B58A-3335C0D95CA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A021A820-2902-4F29-AB02-CEE9387D7C38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A021A820-2902-4F29-AB02-CEE9387D7C38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A021A820-2902-4F29-AB02-CEE9387D7C38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A021A820-2902-4F29-AB02-CEE9387D7C38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +38,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{FC059D32-A237-4EAC-9FB1-419BB5E64F51} = {2F65CF8D-1CC9-4046-852B-8FE3B1CE4ACE}
 		{E64E2E85-8024-4FEF-B58A-3335C0D95CA9} = {C0BB6051-CF73-4CF4-B6EC-9DA8FEB4B028}
+		{A021A820-2902-4F29-AB02-CEE9387D7C38} = {C0BB6051-CF73-4CF4-B6EC-9DA8FEB4B028}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0219507E-1B74-4086-8FFA-3A4B474FBD98}

@@ -1,7 +1,8 @@
 using Xunit;
 using HG.Puter.Test.Classes;
-using HG.Puter.Test;
+//using HG.Puter.Test;
 using Tynamix.ObjectFiller;
+using System;
 
 namespace HG.Puter.Test
 {
@@ -11,8 +12,9 @@ namespace HG.Puter.Test
         {
 
         }
+       
         [Fact]
-        public void AllTypeToString()
+        public void All_Type_To_String()
         {
             var AllTypeModel = new Filler<AllTypeModel>().Create();
             var StringModel = new Filler<StringModel>().Create(); ;
@@ -25,9 +27,10 @@ namespace HG.Puter.Test
             Assert.Equal(AllTypeModel.Short.ToString(), StringModel.Short);
             Assert.Equal(AllTypeModel.Float.ToString(), StringModel.Float);
             Assert.Equal(AllTypeModel.Ushort.ToString(), StringModel.Ushort);
+            Assert.Equal(AllTypeModel.ListInt, StringModel.ListInt);
         }
         [Fact]
-        public void StringToAllType()
+        public void String_To_All_Type()
         {
             var _allTypeModel = new Filler<AllTypeModel>().Create();
             var StringModel = new StringModel();
@@ -44,6 +47,54 @@ namespace HG.Puter.Test
             Assert.Equal(AllTypeModel.Float.ToString(), StringModel.Float);
             Assert.Equal(AllTypeModel.Ushort.ToString(), StringModel.Ushort);
         }
+
+        [Fact]
+        public void Type_Converter_Str_To_Date_Test()
+        {
+            var AllTypeModel = new Filler<AllTypeModel>().Create();
+            var StringModel = new Filler<StringModel>().Create();
+
+            PuterContext puter = new PuterContext();
+
+            puter.CreateMap<string, DateTime>(s => DateTime.Parse(s));
+            puter.CreateMap<string, int>(s => default(int));
+            puter.CreateMap<string, long>(s => default(long));
+            puter.CreateMap<string, float>(s => default(float));
+            puter.CreateMap<string, double>(s => default(double));
+            puter.CreateMap<string, short>(s => default(short));
+            puter.CreateMap<string, ushort>(s => default(ushort));
+            puter.CreateMap<string, byte>(s => default(byte));
+
+            AllTypeModel.DateTime = DateTime.Now;
+            StringModel.DateTime = "2007-01-02 03:04:05";
+
+            puter.Put(AllTypeModel, StringModel);
+            Assert.Equal(AllTypeModel.DateTime.Year, 2007);
+            Assert.Equal(AllTypeModel.DateTime.Month, 01);
+            Assert.Equal(AllTypeModel.DateTime.Day, 02);
+            Assert.Equal(AllTypeModel.DateTime.Hour, 03);
+            Assert.Equal(AllTypeModel.DateTime.Minute, 04);
+            Assert.Equal(AllTypeModel.DateTime.Second, 05);
+        }
+        [Fact]
+        public void Type_Converter_Date_To_Str_Test()
+        {
+            var AllTypeModel = new Filler<AllTypeModel>().Create();
+            var StringModel = new Filler<StringModel>().Create();
+
+            PuterContext puter = new PuterContext();
+            puter.CreateMap<DateTime, string>(s =>
+            {
+                return "dddddd";
+            });
+
+            AllTypeModel.DateTime = DateTime.Now;
+            StringModel.DateTime = "2007-01-02 03:04:05";
+
+            puter.Put(StringModel, AllTypeModel);
+            Assert.Equal(StringModel.DateTime, "dddddd");
+        }
+
     }
 
    
