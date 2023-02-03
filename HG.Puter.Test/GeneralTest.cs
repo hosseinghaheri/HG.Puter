@@ -110,11 +110,8 @@ namespace HG.Puter.Test
 
             PuterContext puter = new PuterContext();
 
-            puter.CreateMap<string, DateTime>(s =>
-            {
-                if(s == null) return null;
-                else { return DateTime.Parse(s); }
-            });
+            puter.CreateMap<string, DateTime>(s => s==null?default(DateTime) : DateTime.Parse(s));
+            puter.CreateMap<string, DateTime?>(s => s==null?null : DateTime.Parse(s));
             puter.CreateMap<string, int>(s => default(int));
             puter.CreateMap<string, long>(s => default(long));
             puter.CreateMap<string, float>(s => default(float));
@@ -131,6 +128,7 @@ namespace HG.Puter.Test
 
             puter.Put(AllTypeModel, StringModel);
             Assert.Equal(AllTypeModel.DateTime, default(DateTime));
+            Assert.Equal(AllTypeModel.DateTimeNA, default(DateTime));
             Assert.Equal(AllTypeModel.DateTimeNA, null);
         }
 

@@ -55,7 +55,7 @@
                     }
                     else if (p.PropertyType != typeof(T).GetProperty(p.Name).GetType())
                     {
-                        dynamic converter = null;
+                        TypeConverter converter = null;
                         if (context != null)
                         {
                             converter =
@@ -69,7 +69,7 @@
                         }
                         if (converter != null)
                         {
-                            p.SetValue(source, converter.Converter(val), null);
+                            p.SetValue(source, converter.Converter.Compile().DynamicInvoke(val), null);
                         }
                         else if (val == null)
                         {
