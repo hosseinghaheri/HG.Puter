@@ -128,7 +128,6 @@ namespace HG.Puter.Test
 
             puter.Put(AllTypeModel, StringModel);
             Assert.Equal(AllTypeModel.DateTime, default(DateTime));
-            Assert.Equal(AllTypeModel.DateTimeNA, default(DateTime));
             Assert.Equal(AllTypeModel.DateTimeNA, null);
         }
 

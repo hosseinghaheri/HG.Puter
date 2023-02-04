@@ -63,7 +63,7 @@ namespace HG.Puter.ConsoleTest
                     }
                     else if (p.PropertyType != typeof(T).GetProperty(p.Name).GetType())
                     {
-                        dynamic converter = null;
+                        TypeConverter converter = null;
                         if (context != null)
                         {
                             converter =
@@ -71,15 +71,26 @@ namespace HG.Puter.ConsoleTest
                                 {
                                     return
                                         t.SourceType.FullName == t2Generic.FullName//rt.FullName
+                                        && t.ResultType.FullName == t1.FullName;// p.PropertyType.FullName;
+                                }
+                            );
+                            if (converter == null)
+                            {
+                                converter =
+                                context.TypeConverters.SingleOrDefault(t =>
+                                {
+                                    return
+                                        t.SourceType.FullName == t2Generic.FullName//rt.FullName
                                         && t.ResultType.FullName == t1Generic.FullName;// p.PropertyType.FullName;
                                 }
                             );
+                            }
                         }
                         if (converter != null)
                         {
-                            p.SetValue(source, converter.Converter(val), null);
+                            p.SetValue(source, converter.Converter.Compile().DynamicInvoke(val), null);
                         }
-                        else if (val==null)
+                        else if (val == null)
                         {
                             p.SetValue(source, val, null);
                         }
@@ -146,21 +157,23 @@ namespace HG.Puter.ConsoleTest
 
     public interface IPuterContext
     {
-        ICollection<dynamic> TypeConverters { get; set; }
-        void CreateMap<TSource, TResult>(Func<dynamic, dynamic> Converter);
+        ICollection<TypeConverter> TypeConverters { get; set; }
+        void CreateMap<TSource, TResult>(Func<TSource, TResult> Converter);
     }
     public class PuterContext : IPuterContext
     {
-        public ICollection<dynamic> TypeConverters { get; set; } = new List<dynamic>();
-        public void CreateMap<TSource, TResult>(Func<dynamic, dynamic> Converter)
+        public ICollection<TypeConverter> TypeConverters { get; set; } = new List<TypeConverter>();
+        public void CreateMap<TSource, TResult>(Func<TSource, TResult> Converter)
         {
-            TypeConverters.Add(new TypeConverter(typeof(TSource), typeof(TResult), Converter));
+            TypeConverters.Add(new TypeConverter(typeof(TSource), typeof(TResult), FuncToExpression(Converter)));
         }
+        private Expression<Func<TInput, TOutput>> FuncToExpression<TInput, TOutput>(Func<TInput, TOutput> f) => x => f(x);
+
     }
     public class TypeConverter
     {
 
-        public TypeConverter(Type TSource, Type TResult, Func<dynamic, dynamic> Converter)
+        public TypeConverter(Type TSource, Type TResult, LambdaExpression Converter)
         {
             this.SourceType = (TSource);
             this.ResultType = (TResult);
@@ -168,7 +181,7 @@ namespace HG.Puter.ConsoleTest
         }
         public Type SourceType { get; set; }
         public Type ResultType { get; set; }
-        public Func<dynamic, dynamic> Converter { get; set; }
+        public LambdaExpression Converter { get; set; }
 
     }
 

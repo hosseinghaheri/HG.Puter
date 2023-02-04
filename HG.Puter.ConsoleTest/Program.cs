@@ -5,7 +5,11 @@ using HG.Puter.ConsoleTest;
 PuterContext puter = new PuterContext();
 puter.CreateMap<string, DateTime>(s =>
 {
-    return DateTime.Parse(s);
+    return s == null ? default(DateTime) : DateTime.Parse(s);
+});
+puter.CreateMap<string, DateTime?>(s =>
+{
+    return s == null ? null : DateTime.Parse(s);
 });
 puter.CreateMap<DateTime, string>(s =>
 {
@@ -13,11 +17,13 @@ puter.CreateMap<DateTime, string>(s =>
 });
 
 A a_dat = new A() { Date = DateTime.Now };
-B b_str = new B() { Date = ("2022-01-01 01:01:01") };
-C c_datNa = new C() { Date = null };
+//B b_str = new B() { Date = ("2022-01-01 01:01:01") };
+B b_str = new B() { Date = null };
+C c_datNa = new C() { Date = DateTime.Now };
 
-puter.Put(b_str, c_datNa);
-//puter.Put(a_dat, b_str);
+//puter.Put(b_str, c_datNa);
+puter.Put(c_datNa, b_str);
+puter.Put(a_dat, b_str);
 //puter.Put(b_str, a_dat);
 
 var ss = "sss";

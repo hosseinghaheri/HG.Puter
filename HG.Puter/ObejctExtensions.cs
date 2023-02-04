@@ -63,9 +63,20 @@
                                 {
                                     return
                                         t.SourceType.FullName == t2Generic.FullName//rt.FullName
+                                        && t.ResultType.FullName == t1.FullName;// p.PropertyType.FullName;
+                                }
+                            );
+                            if (converter == null)
+                            {
+                                converter =
+                                context.TypeConverters.SingleOrDefault(t =>
+                                {
+                                    return
+                                        t.SourceType.FullName == t2Generic.FullName//rt.FullName
                                         && t.ResultType.FullName == t1Generic.FullName;// p.PropertyType.FullName;
                                 }
                             );
+                            }
                         }
                         if (converter != null)
                         {
