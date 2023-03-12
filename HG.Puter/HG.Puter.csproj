@@ -9,10 +9,10 @@
     <PackageIcon>42682-rainbow-icon.png</PackageIcon>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Description>Putting similar properties from the source object into the destination object.</Description>
-    <AssemblyVersion>2.1.0.0</AssemblyVersion>
-    <Version>$(VersionPrefix)2.1.0</Version>
+    <AssemblyVersion>3.2.0.0</AssemblyVersion>
+    <Version>$(VersionPrefix)3.2.0</Version>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <FileVersion>2.1.0.0</FileVersion>
+    <FileVersion>3.2.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

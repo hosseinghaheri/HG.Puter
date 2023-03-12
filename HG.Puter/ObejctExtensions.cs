@@ -33,17 +33,17 @@
                 }
             });
         }
-        public static void Put<T>(this IPuterContext context, object source, T data)
+        public static void Put<TSrc, TDest>(this IPuterContext context, TDest dest, TSrc data, Func<object, bool> SrcPropCondition = null)
         {
-            var dataPro = typeof(T).GetProperties().Select(p => p.Name).ToList();
-            source.GetType().GetProperties().ToList().ForEach(p =>
+            var dataPro = typeof(TSrc).GetProperties().Select(p => p.Name).ToList();
+            dest.GetType().GetProperties().ToList().ForEach(p =>
             {
-                if (dataPro.Any(x => x == p.Name))
+                if (dataPro.Any(x => x == p.Name) && (SrcPropCondition == null || (SrcPropCondition!=null && SrcPropCondition(typeof(TSrc).GetProperty(p.Name).GetValue(data,null)))))
                 {
-                    var val = typeof(T).GetProperty(p.Name).GetValue(data, null);
+                    var val = typeof(TSrc).GetProperty(p.Name).GetValue(data, null);
                     var t1 = p.PropertyType;
                     var t1Generic = Nullable.GetUnderlyingType(p.PropertyType);
-                    var t2 = typeof(T).GetProperty(p.Name).PropertyType;
+                    var t2 = typeof(TSrc).GetProperty(p.Name).PropertyType;
                     var t2Generic = Nullable.GetUnderlyingType(t2);
 
                     if (t2Generic == null) { t2Generic = t2; }
@@ -51,9 +51,9 @@
 
                     if (t1Generic == t2 || (t1Generic != null && t1Generic == t2Generic))
                     {
-                        p.SetValue(source, val, null);
+                        p.SetValue(dest, val, null);
                     }
-                    else if (p.PropertyType != typeof(T).GetProperty(p.Name).GetType())
+                    else if (p.PropertyType != typeof(TSrc).GetProperty(p.Name).GetType())
                     {
                         TypeConverter converter = null;
                         if (context != null)
@@ -80,13 +80,13 @@
                         }
                         if (converter != null)
                         {
-                            p.SetValue(source, converter.Converter.Compile().DynamicInvoke(val), null);
+                            p.SetValue(dest, converter.Converter.Compile().DynamicInvoke(val), null);
                         }
                         else if (val == null)
                         {
-                            p.SetValue(source, val, null);
+                            p.SetValue(dest, val, null);
                         }
-                        else { p.SetValue(source, Convert.ChangeType(val, t1Generic), null); }
+                        else { p.SetValue(dest, Convert.ChangeType(val, t1Generic), null); }
                     }
                 }
             });

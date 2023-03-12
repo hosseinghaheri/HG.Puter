@@ -19,6 +19,19 @@ namespace HG.Puter.Test.Classes
         public DateTime? DateTimeNA { get; set; }
         public List<int> ListInt { get; set; }
     }
+    public class AllTypeModel_NA
+    {
+        public string? String { get; set; }
+        public int? Int { get; set; }
+        public long? Long { get; set; }
+        public double? Double { get; set; }
+        public short? Short { get; set; }
+        public float? Float { get; set; }
+        public ushort? Ushort { get; set; }
+        public DateTime? DateTime { get; set; }
+        public DateTime? DateTimeNA { get; set; }
+        public List<int>? ListInt { get; set; }
+    }
     public class StringModel
     {
         public string String { get; set; }

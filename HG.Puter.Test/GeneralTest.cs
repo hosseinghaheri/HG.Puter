@@ -153,6 +153,27 @@ namespace HG.Puter.Test
             Assert.Equal(StringModel.DateTime, "dddddd");
             Assert.Equal(StringModel.DateTimeNA, "dddddd");
         }
+
+        [Fact]
+        public void Patch_Test()
+        {
+            var AllTypeModel = new AllTypeModel_NA
+            {
+                Int = 444
+            };
+            var StringModel = new Filler<StringModel>().Create();
+
+            PuterContext puter = new PuterContext();
+            puter.CreateMap<int, string>(s =>
+            {
+                return (s*10).ToString()+"ok";
+            });
+
+            puter.Put(StringModel, AllTypeModel, p => p != null);
+            Assert.Equal(StringModel.Int, "4440ok");
+            Assert.NotEqual(StringModel.Long, null);
+            Assert.NotEqual(StringModel.Short, null);
+        }
     }
 
    
